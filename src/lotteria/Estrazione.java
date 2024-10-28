@@ -13,42 +13,78 @@ import java.util.Random;
  */
 public class Estrazione extends Thread {
     // attributi
-    private int numero;
+    private int n;
+    private int numeri[][];
+    private int vincitori[] = new int[3];
+    private Random random = new Random();
+    private int contawin = 0;
+
     /**
      * 
      * Metodo costruttore
+     * @param numero 
      */   
-    public Estrazione() {
+    public Estrazione(int numero) {
         // popolamento matrice numeri estratti
-        // inizializzazione array vincitori
-        numero = 5;
+        this.n = numero;
+        this.numeri = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                numeri[i][j] = random.nextInt(100);
+            }
+        }
     }
 
     /**
     * 
-    * Metodo per visualizzare la matrice dei numeri estratti
+    * Metodo che stampa la matrice dei numeri estratti
     */
     public void stampaMatrice() {
-       // stampa matrice dei numeri estratti
-    }
-    
-    /**
-    * 
-    * Metodo per visualizzare i vincitori dell'estrazione
-    */
-    public void stampaVincitori() {
-        // stampa array dei vincitori
+       // print matrice 
+       System.out.println("Matrice dei numeri vincenti: ");
+       for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(numeri[i][j] + " ");
+            }
+            System.out.println();
         }
+    }
 
     /**
     * 
     * Metodo per verificare il numero scelto dal giocatore e determinare i vincitori
     */
-    public void verifica(int numero, int idGiocatore) {
-        if (numero==this.numero)
-            System.out.println("Giocatore " + idGiocatore + ", hai vinto!");
-        else 
-            System.out.println("Giocatore " + idGiocatore + ", purtroppo non hai vinto...");
+    public synchronized void verifica(int numero, int idGiocatore) {
+        boolean trovato = false;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (numero == numeri[i][j]) {
+                    if (contawin < 3) {
+                        vincitori[contawin] = idGiocatore;
+                        contawin++;
+                    }
+                    trovato = true;
+                }
+            }
+        }
+
+        if (!trovato) {
+            System.out.println(idGiocatore + " il numero " + numero + " non era vincente!");
+        }
+    }
+
+    /**
+    * 
+    * Metodo per visualizzare i vincitori dell'estrazione
+    */
+    public void stampaVincitori() {
+        for (int i = 0; i < 3; i++) {
+            if (vincitori[i] != 0) {
+                System.out.println("Complimenti " + vincitori[i] + " per la vittoria");
+            }
+        }
     }
 
     /**
@@ -59,8 +95,6 @@ public class Estrazione extends Thread {
         // stampa iniziale
         // estrazione dei numeri
         // stampa matrice
-        // stampa finale
+        stampaMatrice();
     }
 }
-
-

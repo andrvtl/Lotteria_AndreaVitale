@@ -1,21 +1,22 @@
-<h1 align="center">Lotteria</h1>
+# Progetto Lotteria Vitale Andrea
 
-<p align="center" style="font-family: monospace">Monica Ciuchetti <a href="https://github.com/mciuchetti">@mciuchetti</a></p>
-<p align="center" style="font-family: monospace">Corso TPSIT <a href="https://www.avoltapg.edu.it/">ITTS A. Volta (PG)</a></p>
-<p align="center" style="font-family: monospace">Template del file README.md ispirato da <a href="https://github.com/matbagnoletti">@matbagnoletti</a></p>
+## Scopo del progetto
+Il progetto simula una lotteria in cui diversi giocatori scelgono un numero e tentano di vincere, verificando se il loro numero è tra quelli estratti casualmente in una matrice di dimensioni a scelta.
 
-## Descrizione
-Applicazione Java per simulare l'estrazione di numeri random da inserire in una matrice e il successivo gioco di indovinare uno dei numeri estratti.
+## Classi utilizzate
 
-## Obiettivi
-- Diagramma degli stati di un thread e transizioni	
-- Variabili di classe e thread safety
-- Realizzazione di un thread user-level
-- Gestione eccezioni
-- Documentazione del codice in Java
-- Diagramma UML delle classi e dei casi d’uso
+- **Giocatore**: Questa classe rappresenta un giocatore che può scegliere un numero da giocare. Ogni giocatore è un thread separato e verifica se il numero scelto è vincente.
+  
+- **Estrazione**: Questa classe gestisce la matrice di numeri casuali e verifica se i numeri giocati dai giocatori sono vincenti. Il metodo `verifica()` controlla ogni numero scelto con quelli nella matrice e tiene traccia dei vincitori:
+  - **verifica()**: Confronta il numero giocato da un giocatore con i numeri estratti. Se il numero è presente nella matrice, il giocatore ha vinto. La verifica è sincronizzata per evitare conflitti tra i vari thread.
 
+- **Lotteria**: Questa classe contiene il metodo `main` e gestisce l'inizio del gioco e la creazione dei thread.
 
-## Osservazioni
-Il progetto è stato scritto per scopi didattici e ha solo lo scopo di far comprendere le proprietà della classe Thread. 
-Ad esso è associato il corrispondente <a href="https://drive.google.com/file/d/1DT6W73QeMnYEYUodcQ1hVpVY1DD0xCNv/view?usp=drive_link">diagramma delle classi</a>.
+## Riferimenti alle librerie
+Vengono utilizzate librerie Java standard per la gestione dei thread (`Thread`), la generazione di numeri casuali (`Random`), e l'input da console (`BufferedReader`, `InputStreamReader`).
+
+## Gestione degli errori
+Gli errori sono gestiti con tecniche specifiche di try-catch. In caso di errore nell'inserimento di un numero viene visualizzato un messaggio di allerta, dopo il quale il giocatore può ritentare.
+
+## Commento dell'esecuzione
+Il programma chiede inizialmente la dimensione della matrice dei numeri vincenti, dopodichè viene richiesto ai giocatori di scegliere ognuno il proprio numero. Dopo l'estrazione, i vincitori vengono annunciati e il gioco termina.
